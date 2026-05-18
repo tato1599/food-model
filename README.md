@@ -442,7 +442,4 @@ El objetivo original de 85-90% fue **superado** (91.23% Test Accuracy). Para fut
 - ResNet Paper: "Deep Residual Learning for Image Recognition" (He et al., 2016)
 - Dataset: Food Images (colección local de 34 categorías)
 
----
 
-*Documento generado para el Proyecto Final de la asignatura.*
-# food-model
