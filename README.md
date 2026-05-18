@@ -1,8 +1,10 @@
 # Proyecto Final: Clasificación de Imágenes de Comida
 
-**Autor:** Neri  
+**Integrantes:**  
+- Lolita Alva Carreño (Lolita) - 21111241  
+- Daniel Octavio Ramirez Neri - 21111240  
 **Fecha:** Mayo 2026  
-**Entorno:** WSL (Ubuntu) + NVIDIA GeForce RTX 4060  
+**Entorno:** Debian + NVIDIA GeForce RTX 4060  
 **Framework:** PyTorch 2.5.1 + CUDA 12.1  
 
 ---
@@ -55,8 +57,11 @@ proyectoma/
 ### 3.1 Descripción
 - **Total de imágenes:** 23,873
 - **Número de clases:** 34
-- **Origen:** Dataset de imágenes de comida recolectado localmente.
+- **Origen:** [Kaggle - Food Image Classification Dataset](https://www.kaggle.com/datasets/harishkumardatalab/food-image-classification-dataset?select=Food+Classification+dataset).
 - **Formato:** Archivos JPG de diferentes tamaños originales.
+
+### 3.4 Fuente de descarga
+- Link oficial del dataset: https://www.kaggle.com/datasets/harishkumardatalab/food-image-classification-dataset?select=Food+Classification+dataset
 
 ### 3.2 Distribución
 | Conjunto | Cantidad | Porcentaje |
