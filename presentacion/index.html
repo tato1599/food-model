@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Presentacion - Clasificacion de Comida</title>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reveal.css" />
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/theme/white.css" id="theme" />
+  <style>
+    :root {
+      --ink: #1f2937;
+      --accent: #c2410c;
+      --muted: #6b7280;
+    }
+
+    .reveal {
+      color: var(--ink);
+      font-size: 34px;
+    }
+
+    .reveal h1,
+    .reveal h2,
+    .reveal h3 {
+      color: #111827;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .accent {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .small {
+      font-size: 0.68em;
+      color: var(--muted);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .food-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 2px solid #e5e7eb;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .placeholder {
+      border: 2px dashed #9ca3af;
+      border-radius: 14px;
+      min-height: 220px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #6b7280;
+      font-size: 0.62em;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .boxed {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 14px;
+      background: #fafafa;
+    }
+
+    body.no-reveal {
+      background: #ffffff;
+    }
+
+    body.no-reveal .reveal .slides {
+      transform: none !important;
+      width: min(1100px, 94vw);
+      margin: 1.5rem auto;
+    }
+
+    body.no-reveal .reveal .slides section {
+      display: block !important;
+      position: static !important;
+      opacity: 1 !important;
+      transform: none !important;
+      margin: 0 0 1.5rem 0;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 20px;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h2>Clasificacion de Imagenes de Comida</h2>
+        <p class="small">Proyecto final de vision por computadora</p>
+        <div class="grid-3">
+          <img class="food-img" src="assets/pizza.jpg" alt="Pizza" />
+          <img class="food-img" src="assets/sushi.jpg" alt="Sushi" />
+          <img class="food-img" src="assets/burger.jpg" alt="Burger" />
+        </div>
+        <p class="small">Nombre: ____________________ | Curso: ____________________</p>
+      </section>
+
+      <section>
+        <h3>Problema y objetivo</h3>
+        <ul>
+          <li>Construir un sistema que identifique que comida aparece en una imagen.</li>
+          <li>Clasificar en <span class="accent">34 clases</span> distintas.</li>
+          <li>Publicar una web donde el usuario sube imagen y recibe prediccion.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Dataset</h3>
+        <div class="grid-2">
+          <div>
+            <ul>
+              <li>Total de imagenes: <strong>23,873</strong></li>
+              <li>Numero de clases: <strong>34</strong></li>
+              <li>Split: 70% train, 15% val, 15% test</li>
+            </ul>
+          </div>
+          <div class="grid-2">
+            <img class="food-img" src="assets/apple_pie.jpg" alt="Apple pie" />
+            <img class="food-img" src="assets/fried_rice.jpg" alt="Fried rice" />
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h3>Preprocesamiento</h3>
+        <ul>
+          <li>Resize de imagenes: 128x128 y luego 224x224 para el modelo final.</li>
+          <li>Normalizacion con media [0.6288, 0.5124, 0.3893] y std [0.2264, 0.2395, 0.2512].</li>
+          <li>Data augmentation: flip, rotation, resized crop, affine, color jitter y perspective.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Evolucion de modelos</h3>
+        <div class="boxed">
+          <p>1) Modelo base (fully connected): <strong>21.16%</strong></p>
+          <p>2) Modelo mejorado (ResNet18): <strong>78.78%</strong></p>
+          <p>3) Modelo final (ResNet50): <strong>91.23%</strong></p>
+        </div>
+      </section>
+
+      <section>
+        <h3>Pregunta del profesor: Se uso convolucional?</h3>
+        <p class="accent">Si. Se uso una CNN (ResNet18 y ResNet50).</p>
+        <ul>
+          <li>ResNet es una red convolucional profunda con bloques residuales.</li>
+          <li>Mejora porque conserva patrones espaciales de la imagen.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Que filtros use?</h3>
+        <ul>
+          <li>No defini filtros manuales; el modelo los aprende automaticamente.</li>
+          <li>En ResNet50 la primera capa usa conv de <strong>64 filtros 7x7</strong>.</li>
+          <li>Los bloques bottleneck usan convoluciones <strong>1x1, 3x3, 1x1</strong>.</li>
+          <li>Se aplico transfer learning + fine-tuning para adaptar esos filtros al dataset.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Arquitectura final</h3>
+        <div class="grid-2">
+          <div>
+            <ul>
+              <li>Backbone: ResNet50 pre-entrenada</li>
+              <li>Capas 1-2 congeladas</li>
+              <li>Layer3 y Layer4 descongeladas</li>
+              <li>Cabeza final: Dropout + Linear + BatchNorm + ReLU</li>
+            </ul>
+          </div>
+          <div class="placeholder">Espacio para diagrama de arquitectura<br /> (opcional)</div>
+        </div>
+      </section>
+
+      <section>
+        <h3>Entrenamiento</h3>
+        <ul>
+          <li>Optimizador: AdamW (lr = 5e-4, weight decay = 1e-4)</li>
+          <li>Scheduler: ReduceLROnPlateau</li>
+          <li>Early stopping y checkpointing del mejor modelo</li>
+          <li>Tiempo aproximado del modelo final: 24 minutos</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Resultados</h3>
+        <div class="grid-2">
+          <div class="boxed">
+            <p>Validation Accuracy: <strong>91.01%</strong></p>
+            <p>Test Accuracy: <strong>91.23%</strong></p>
+            <p>Salida en inferencia: clase, confianza y top-5</p>
+          </div>
+          <div class="placeholder">Espacio para grafica de accuracy/loss</div>
+        </div>
+      </section>
+
+      <section>
+        <h3>Aplicacion web (Flask)</h3>
+        <ul>
+          <li>Frontend: selector de imagen, vista previa y resultado.</li>
+          <li>Backend: endpoint <code>/predict</code> que carga el .pth y predice.</li>
+          <li>Respuesta: clase predicha, confianza y top-5.</li>
+        </ul>
+        <div class="placeholder">Espacio para captura de tu pagina web funcionando</div>
+      </section>
+
+      <section>
+        <h3>Codigo clave (inferencia)</h3>
+        <pre><code class="language-python">with torch.no_grad():
+    output = model(img_tensor)
+    probs = torch.nn.functional.softmax(output, dim=1)
+    conf, pred = probs.max(1)
+
+pred_idx = pred.item()
+clase = CLASSES[pred_idx]
+confianza = conf.item() * 100</code></pre>
+      </section>
+
+      <section>
+        <h3>Demo sugerida en clase</h3>
+        <ol>
+          <li>Subir una imagen (ej: samosa).</li>
+          <li>Mostrar clase predicha y confianza.</li>
+          <li>Comparar con otra imagen diferente para validar.</li>
+        </ol>
+        <img class="food-img" src="assets/samosa.jpg" alt="Samosa" />
+      </section>
+
+      <section>
+        <h3>Conclusiones</h3>
+        <ul>
+          <li>Si se uso red convolucional y fue clave para mejorar el rendimiento.</li>
+          <li>Transfer learning con ResNet50 logro el mejor resultado.</li>
+          <li>La app web permite usar el modelo de forma practica y simple.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Gracias</h2>
+        <p>Preguntas?</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js/dist/reveal.js"></script>
+  <script src="https://unpkg.com/reveal.js/plugin/highlight/highlight.js"></script>
+  <script>
+    if (window.Reveal) {
+      const plugins = [];
+      if (window.RevealHighlight) {
+        plugins.push(window.RevealHighlight);
+      }
+
+      Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        plugins: plugins
+      });
+    } else {
+      document.body.classList.add("no-reveal");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clasificador de Comida</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <main class="container">
+    <h1>Clasificador de Imagenes de Comida</h1>
+    <p class="subtitle">Sube una imagen y el modelo te dira la clase predicha.</p>
+
+    <form id="upload-form">
+      <label for="image" class="file-label">Seleccionar imagen</label>
+      <input id="image" name="image" type="file" accept="image/*" required />
+      <button type="submit">Analizar</button>
+    </form>
+
+    <section id="preview-section" class="hidden">
+      <h2>Vista previa</h2>
+      <img id="preview" alt="Vista previa de la imagen" />
+    </section>
+
+    <section id="result" class="hidden"></section>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
